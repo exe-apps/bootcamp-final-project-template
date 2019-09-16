@@ -29,7 +29,7 @@ class ComponentTable extends Component {
                                     <td className='component-table-cell'>{component.attribute3}</td>
                                     <td className='component-table-cell'>
                                         <EditIcon onClick={this.props.showComponentModal} />
-                                        <DeleteIcon onClick={() => this.props.deleteComponent(component.id)} />
+                                        <DeleteIcon onClick={() => this.props.deleteComponentItem(component.id)} />
                                     </td>
                                 </tr>
                             )

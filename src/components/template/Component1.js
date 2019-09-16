@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ComponentTable from './ComponentTable';
+import ComponentModal from './ComponentModal';
 
 class Component1 extends Component {
     constructor(props) {  
@@ -40,41 +41,44 @@ class Component1 extends Component {
     }
 
 
-    // Event and Logic functions - use arrow function for automatic context binding 
-    /*
+    // EVENTS FUNCTION - use arrow function for automatic context binding 
     handleChangeInfo = e => {
         const {name, value} = e.target;
 
         this.setState((prevState) => ({
-        user: {
-            ...prevState.user,
-            [name]: value
-        }
+            componentItem: {
+                ...prevState.componentItem,
+                [name]: value
+            }
         }));
     }
 
-    handleAddUser = e => {
-
-        let user = this.state.user;
-        let usersList = [...this.state.usersList];
-
-        usersList.push(user);
-
-        this.setState({usersList : usersList});
-
-        e.preventDefault();
+    handleAddComponent = e => {
+        console.log('ADD COMPONENT ITEM', this.state.componentItem);
+        
+        // Place axios call for delete here
+        
+        this.hideModal();
     }
 
-    deleteUser = rowIndex => {
-
-        let usersList = [...this.state.usersList];
-
-        usersList.splice(rowIndex, 1);
-
-        this.setState({usersList: usersList});
+    deleteComponentItem = componentId => {
+        console.log('DELETE COMPONENT ITEM', componentId);
+        
+        // Place axios call for delete here
     }
-  */
 
+
+    // MODAL VISIBILITY FUNCTIONS
+    showModal = () => {
+        this.setState({showComponentModal : true});
+    }
+
+    hideModal = () => {
+        this.setState({showComponentModal : false});
+    }
+
+
+    // RENDER PORTION
     render() {
         return (
             <div>
@@ -82,10 +86,24 @@ class Component1 extends Component {
                 <br/>
                 <p>You have routed to Component1. Remove this when using your own design.</p>
 
-                <div className="component-table">
-                    <ComponentTable componentList={this.state.componentList} />
+                <div className='hidden-modals'>
+                    <ComponentModal 
+                        handleChangeInfo={this.handleChangeInfo}
+                        handleAddComponent={this.handleAddComponent}
+                        showComponentModal={this.state.showComponentModal}
+                    />
                 </div>
 
+                <div className="component-table">
+                    <ComponentTable 
+                        componentList={this.state.componentList} 
+                        deleteComponentItem={this.deleteComponentItem}
+                    />
+                </div>
+                
+                <div>
+                    <button type="button" onClick={this.showModal}>ADD COMPONENT MODAL</button>
+                </div>
             </div>
         )
     }
