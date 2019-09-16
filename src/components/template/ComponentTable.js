@@ -5,8 +5,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 class ComponentTable extends Component {
     render() {
-        const { componentList } = this.props;   // destructure needed props
-                                                // const componentList = this.props.componentList   < same thing
+        // destructure needed props
+        const { 
+            componentList, 
+            deleteComponentItem, 
+            showUpdateModal 
+        } = this.props;   
+        // const componentList = this.props.componentList   < same thing
 
         // Render data table
         return (
@@ -28,8 +33,8 @@ class ComponentTable extends Component {
                                     <td className='component-table-cell'>{component.attribute2}</td>
                                     <td className='component-table-cell'>{component.attribute3}</td>
                                     <td className='component-table-cell'>
-                                        <EditIcon onClick={this.props.showComponentModal} />
-                                        <DeleteIcon onClick={() => this.props.deleteComponentItem(component.id)} />
+                                        <EditIcon onClick={() => showUpdateModal(component)} />
+                                        <DeleteIcon onClick={() => deleteComponentItem(component.id)} />
                                     </td>
                                 </tr>
                             )

@@ -27,7 +27,8 @@ class Component1 extends Component {
                 attribute2: '',
                 attribute3: '',
             },
-            showComponentModal: false   // value to control component modal visibility
+            showComponentModal: false,   // value to control component modal visibility
+            modalFlow: 'add'             // value used to identify if modal should add or update
         };
     }
 
@@ -61,6 +62,14 @@ class Component1 extends Component {
         this.hideModal();
     }
 
+    handleUpdateComponent = e => {
+        console.log('UPDATE COMPONENT ITEM', this.state.componentItem);
+        
+        // Place axios call for delete here
+        
+        this.hideModal();
+    }
+
     deleteComponentItem = componentId => {
         console.log('DELETE COMPONENT ITEM', componentId);
         
@@ -70,7 +79,25 @@ class Component1 extends Component {
 
     // MODAL VISIBILITY FUNCTIONS
     showModal = () => {
-        this.setState({showComponentModal : true});
+        this.setState(prevState => ({
+            ...prevState,
+            componentItem: {
+                attribute1: '',
+                attribute2: '',
+                attribute3: '',
+            },
+            showComponentModal : true, 
+            modalFlow: 'add' 
+        }))
+    }
+
+    showUpdateModal = (componentItem) => {
+        this.setState(prevState => ({
+            ...prevState,
+            componentItem: componentItem,
+            showComponentModal : true,
+            modalFlow: 'update' 
+        }))
     }
 
     hideModal = () => {
@@ -90,7 +117,10 @@ class Component1 extends Component {
                     <ComponentModal 
                         handleChangeInfo={this.handleChangeInfo}
                         handleAddComponent={this.handleAddComponent}
+                        handleUpdateComponent={this.handleUpdateComponent}
                         showComponentModal={this.state.showComponentModal}
+                        modalFlow={this.state.modalFlow}
+                        componentItem={this.state.componentItem}
                     />
                 </div>
 
@@ -98,6 +128,7 @@ class Component1 extends Component {
                     <ComponentTable 
                         componentList={this.state.componentList} 
                         deleteComponentItem={this.deleteComponentItem}
+                        showUpdateModal={this.showUpdateModal}
                     />
                 </div>
                 
